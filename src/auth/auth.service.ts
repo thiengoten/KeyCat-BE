@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -23,15 +24,18 @@ export class AuthService {
 
   //TODO: Test lại hàm này sau khi đã có hàm mã hóa mật khẩu ở trên
   //* Hàm này sẽ được gọi khi người dùng đăng ký
-  async register(user: any) {
-    //* Trong dự án này, mật khẩu được mã hóa bằng bcrypt trước khi lưu vào database
-    const hashedPassword = await bcrypt.hash(user.password, 10);
+  async register(user: CreateUserDto): Promise<any> {
+    const { comfirmPassword, ...data } = user;
+    console.log(data);
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    console.log(
+      '🚀 ~ file: auth.service.ts:31 ~ AuthService ~ register ~ hashedPassword:',
+      hashedPassword,
+    );
     const newUser = await this.userService.createUser({
-      ...user,
+      ...data,
       password: hashedPassword,
     });
-    //?Trả về một đối tượng user mới mà không có mật khẩu
-    // const { password, ...result } = newUser;
     return newUser;
   }
 
