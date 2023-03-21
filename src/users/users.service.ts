@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Role } from 'src/auth/roles/role.enum';
+import { Role } from 'src/common/decorators/roles/role.enum';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()

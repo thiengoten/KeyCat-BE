@@ -15,9 +15,8 @@ export class CreateArticleDto {
   @ApiProperty()
   title: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  @IsNotEmpty()
   @MaxLength(300)
   @ApiProperty({ required: false })
   description?: string;

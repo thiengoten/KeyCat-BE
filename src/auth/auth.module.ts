@@ -7,6 +7,7 @@ import { jwtConstants } from './constants';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { AuthController } from './auth.controller';
+import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
   providers: [AuthService, LocalStrategy, JwtStrategy],
@@ -17,6 +18,7 @@ import { AuthController } from './auth.controller';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
     }),
+    PrismaModule,
   ],
   exports: [AuthService],
   controllers: [AuthController],
